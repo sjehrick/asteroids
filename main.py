@@ -36,12 +36,18 @@ def main():
         pygame.Surface.fill(screen, "black")
         for obj in updatable:
             obj.update(dt)
+
         for obj in drawable:
             obj.draw(screen)
-        
-        for obj in asteroids:
-            if obj.get_collisions(player):
+
+        for asteroid in asteroids:
+            if asteroid.get_collisions(player):
                 sys.exit("Game over!")
+
+            for shot in shots:
+                if asteroid.get_collisions(shot):
+                    shot.kill()
+                    asteroid.kill()
 
         pygame.display.flip()
         
